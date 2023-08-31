@@ -1,0 +1,241 @@
+<div class="container">
+  <h2>Template Form</h2>
+
+  <!-- Form binded to an Angular element named ngForm named as 'form'(#form) -->
+  <!-- ngNativeValidate will allow the browser to validate each control -->
+  <form #form="ngForm" (ngSubmit)="submitFunction(form)">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input
+        id="name"
+        name="name"
+        class="form-control"
+        type="text"
+        placeholder="Name"
+        [(ngModel)]="userSettings.name"
+        required
+        #nameField="ngModel"
+        (blur)="onBlur(nameField)"
+        [class.field-error]="form.submitted && nameField.invalid"
+      />
+
+      <!-- error span -->
+      <div
+        [hidden]="!form.submitted || nameField.valid"
+        class="alert alert-danger"
+      >
+        Entern a name
+      </div>
+    </div>
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      name="singleModel"
+      [(ngModel)]="singleModel"
+      btnCheckbox
+      btnCheckboxTrue="On"
+      btnCheckboxFalse="Off"
+    >
+      {{ singleModel }}
+    </button>
+
+    <div class="form-check">
+      <label class="form-check-label" for="emailOffers"
+        >Email Special Offers</label
+      >
+      <input
+        class="form-check-input"
+        type="checkbox"
+        id="emailOffers"
+        name="emailOffers"
+        value="false"
+        [(ngModel)]="userSettings.emailOffers"
+      />
+    </div>
+
+    <h5>User Interface Style</h5>
+    <div class="form-group">
+      <div class="btn-group">
+        <label
+          class="btn btn-primary"
+          name="interfaceStyle"
+          [(ngModel)]="userSettings.interfaceStyle"
+          btnRadio="Dark"
+          tabindex="0"
+          role="button"
+          >Dark</label
+        >
+        <label
+          class="btn btn-primary"
+          name="interfaceStyle"
+          [(ngModel)]="userSettings.interfaceStyle"
+          btnRadio="Medium"
+          tabindex="0"
+          role="button"
+          >Medium</label
+        >
+        <label
+          class="btn btn-primary"
+          name="interfaceStyle"
+          [(ngModel)]="userSettings.interfaceStyle"
+          btnRadio="Light"
+          tabindex="0"
+          role="button"
+          >Light</label
+        >
+      </div>
+
+      <!-- <div class="form-check">
+        <label class="form-check-label" for="lightInterface">Light</label>
+        <input
+          class="form-check-input"
+          value="light"
+          type="radio"
+          id="lightInterface"
+          name="interfaceStyle"
+          checked
+          [(ngModel)]="userSettings.interfaceStyle"
+        />
+      </div>
+
+      <div class="form-check">
+        <label class="form-check-label" for="mediumInterface">Medium</label>
+        <input
+          class="form-check-input"
+          value="medium"
+          type="radio"
+          id="mediumInterface"
+          name="interfaceStyle"
+          [(ngModel)]="userSettings.interfaceStyle"
+        />
+      </div>
+
+      <div class="form-check">
+        <label class="form-check-label" for="darkInterface">Dark</label>
+        <input
+          class="form-check-input"
+          value="dark"
+          type="radio"
+          id="darkInterface"
+          name="interfaceStyle"
+          [(ngModel)]="userSettings.interfaceStyle"
+        />
+      </div> -->
+    </div>
+
+    <div class="form-group">
+      <label for="subscritionType">Subscription Type*</label>
+      <select
+        class="form-select form-select-lg mb-3"
+        id="subscritionType"
+        aria-label=".form-select-lg example"
+        name="subscritionType"
+        [(ngModel)]="userSettings.subscriptionType"
+      >
+        <!-- <option value="Monthly">Monthly</option>
+        <option value="Annual">Annual</option>
+        <option selected value="Lifetime">Lifetime</option> -->
+
+        <option *ngFor="let type of subscriptionTypes | async">
+          {{ type }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="notes">Notes</label>
+      <textarea
+        class="form-control"
+        name="notes"
+        id="notes"
+        cols="30"
+        rows="10"
+        [(ngModel)]="userSettings.notes"
+      ></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password*</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        class="form-control"
+        ngModel
+        required
+        #passwordField="ngModel"
+        [class.field-error]="form.submitted && passwordField.invalid"
+      />
+      <!-- error span -->
+      <div
+        [hidden]="!form.submitted || passwordField.valid"
+        class="alert alert-danger"
+      >
+        Entern a password
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="date">Date*</label>
+      <!-- <input
+        type="date"
+        id="date"
+        name="date"
+        class="form-control"
+        ngModel
+        required
+        #dateField="ngModel"
+        [class.field-error]="form.submitted && nameField.invalid"
+      /> -->
+      <input type="text"
+      id="startDate"
+      name="startDate"
+      [(ngModel)]="startDate"
+      placeholder="Datepicker"
+      class="form-control"
+      bsDatepicker
+      [bsConfig]="{ isAnimated: true }">
+    </div>
+
+    <h3>Start Date: {{ startDate }}</h3>
+
+    <div class="from-group">
+      <label for="startTime">Start Time</label>
+      <timepicker [(ngModel)]="startTime" name="startTime"></timepicker>
+    </div>
+
+    <rating [(ngModel)]="rate" [max]="max" [readonly]="isReadonly"
+        (onHover)="hoveringOver($event)" (onLeave)="resetStar()"
+        [titles]="['one','two','three']"></rating>
+    
+    <h3>User Rating: {{ userRating }}</h3>
+
+    <button class="btn btn-primary">send</button>
+    <div [hidden]="!postError" class="alert alert-danger">
+      {{ postErrorMessage }}
+    </div>
+
+    
+  </form>
+</div>
+
+<!-- <h3>{{ userSettings | json }}</h3> -->
+
+<!-- Validation Classes -->
+
+<!-- If form has been touched or not -->
+<!-- <h2>Touched: {{ form.touched }}</h2>
+<h2>Untouched: {{ form.untouched }}</h2>
+<br> -->
+<!-- If form has been modified or not -->
+<!-- <h2>Pristine(not modified): {{ form.pristine }}</h2>
+<h2>Dirty(modified): {{ form.dirty }}</h2> -->
+<br />
+<!-- If form is valid or not -->
+<!-- <h2>Valid: {{ form.valid }}</h2>
+<h2>Invalid: {{ form.invalid }}</h2> -->
+
+<!-- OR WE CAN USE CSS CLASS FOR VALIDATION -->
+<!-- We can see angular classes reacting to the form state-->
+<h3>{{ nameField }}</h3>

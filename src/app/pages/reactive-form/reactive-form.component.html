@@ -1,0 +1,115 @@
+<div class="container">
+  <h2>Reactive Form</h2>
+  <form [formGroup]="myForm" (ngSubmit)="submitFunction()">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input
+        id="name"
+        formControlName="name"
+        class="form-control"
+        type="text"
+        placeholder="Name"
+      />
+      <div
+        *ngIf="validField('name')"
+        class="alert alert-danger"
+      >
+        Must proveed a username
+      </div>
+    </div>
+
+    <div class="form-check">
+      <label class="form-check-label" for="emailOffers"
+        >Email Special Offers</label
+      >
+      <input
+        class="form-check-input"
+        type="checkbox"
+        id="emailOffers"
+        formControlName="emailOffers"
+      />
+    </div>
+
+    <h5>User Interface Style</h5>
+    <div class="form-group">
+      <div class="form-check">
+        <label class="form-check-label" for="lightInterface">Light</label>
+        <input
+          class="form-check-input"
+          value="light"
+          type="radio"
+          id="lightInterface"
+          formControlName="interfaceStyle"
+          checked
+        />
+      </div>
+
+      <div class="form-check">
+        <label class="form-check-label" for="mediumInterface">Medium</label>
+        <input
+          class="form-check-input"
+          value="medium"
+          type="radio"
+          id="mediumInterface"
+          formControlName="interfaceStyle"
+        />
+      </div>
+
+      <div class="form-check">
+        <label class="form-check-label" for="darkInterface">Dark</label>
+        <input
+          class="form-check-input"
+          value="dark"
+          type="radio"
+          id="darkInterface"
+          formControlName="interfaceStyle"
+        />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="subscritionType">Subscription Type</label>
+
+      <select 
+        formControlName="subscritionType" 
+        id="subscritionType"
+        class="form-select form-select-lg mb-3"
+        
+      >
+      <option selected></option>
+      <option *ngFor="let type of subscriptionTypes | async">
+        {{ type }}
+      </option>
+    </select>
+    </div>
+
+    <div class="form-group">
+      <label for="notes">Notes</label>
+      <textarea class="form-control" formControlName="notes" id="notes" cols="30" rows="10"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" formControlName="password" class="form-control">
+      <div
+        *ngIf="validField('password')"
+        class="alert alert-danger"
+      >
+        Must proveed a password
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="date">Date</label>
+      <input type="date" id="date" formControlName="date" class="form-control">
+      <div
+        *ngIf="validField('date')"
+        class="alert alert-danger"
+      >
+        Must proveed a valid date
+      </div>
+    </div>
+
+    <button class="btn btn-primary">send</button>
+  </form>
+</div>

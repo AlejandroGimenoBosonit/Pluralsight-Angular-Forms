@@ -1,0 +1,9 @@
+/* Style onlyt for the element with ng-invalid class inside the element form ignorim the prope rform */
+/* .ng-invalid:not(form).ng-touched {
+  border: 1px solid red;
+}
+ */
+
+ .field-error {
+  border: 1px solid red;
+ }
